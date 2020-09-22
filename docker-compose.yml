@@ -8,5 +8,5 @@ services:
     volumes:
         # Local data
       - ~/Desktop/Docker Data Testing/:/home/rstudio/Docker Data Testing/
-    env_file:
-      - ./secret.env
+    #env_file:
+      #- ./secret.env
