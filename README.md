@@ -31,3 +31,7 @@
     `docker ps`
     `docker stop your_container_id`
     `docker rm your_container_id`
+
+
+**Extra stuff**
+- To make the Docker RStudio environment the same as our local computer, we can copy the file `rstudio-prefs.json` from our local machine and then include it in 
