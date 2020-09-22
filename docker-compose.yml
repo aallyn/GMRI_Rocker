@@ -1,0 +1,12 @@
+version: "3.7"
+
+services:
+  rstudio: 
+    image: ajall1985/gmri_rocker
+    ports: 
+      - "8787:8787"
+    volumes:
+        # Local data
+      - ~/Desktop/Docker Data Testing/:/home/rstudio/Docker Data Testing/
+    env_file:
+      - ./secret.env
