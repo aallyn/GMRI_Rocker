@@ -7,6 +7,6 @@ services:
       - "8787:8787"
     volumes:
         # Local data
-      - ~/Desktop/Docker Data Testing/:/home/rstudio/Docker Data Testing/
+      - ~/Desktop/Docker Data Testing/:./rstudio/Docker Data Testing/
     #env_file:
       #- ./secret.env

@@ -4,4 +4,4 @@ services:
   rstudio:
     volumes:
       # Connect to folder on box
-      ~/Box/RES Data/Shapefiles/NELME_regions:/home/rstudio/NELME_regions
+      ~/Box/RES Data/Shapefiles/NELME_regions:./rstudio/NELME_regions
