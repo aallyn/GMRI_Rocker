@@ -2,7 +2,7 @@ version: "3.8"
 
 services:
   rstudio:
-    volumes:
-      # Here is how you could add data from a folder on Box
+    # Here is how you could add data from a folder on Box
+    #volumes:
       #- ~/Box/RES Data/Shapefiles/NELME_regions:/home/rstudio/NELME_regions
      
