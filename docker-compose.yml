@@ -9,7 +9,7 @@ services:
     volumes:
       # Local data
       - type: volume
-        source: ~/Desktop/Docker Data Testing
+        source: ./Docker Data Testing
         target: /home/rstudio/Docker Data Testing
         volume:
           nocopy: true
