@@ -7,11 +7,12 @@ services:
     ports: 
       - "8787:8787"
     volumes:
+      - ./DataTest:/home/rstudio/DataTest
       # Local data
-      - type: volume
-        source: ./DataTest
-        target: /home/rstudio/DataTest
-        volume:
-          nocopy: true
+      #- type: volume
+        #source: ./DataTest
+        #target: /home/rstudio/DataTest
+        #volume:
+        #  nocopy: true
     #env_file:
       #- ./secret.env
