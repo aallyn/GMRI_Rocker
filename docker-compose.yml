@@ -10,7 +10,7 @@ services:
       # Local data
       - type: volume
         source: ~/Desktop/Docker Data Testing
-        target: /home/Docker Data Testing
+        target: /home/rstudio/Docker Data Testing
         volume:
           nocopy: true
     #env_file:
