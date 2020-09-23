@@ -7,6 +7,7 @@ services:
     ports: 
       - "8787:8787"
     volumes:
-      - ./DataTest:/home/rstudio/DataTest
+      # Here is how you would add data from a local folder
+      #- ./DataTest:/home/rstudio/DataTest
     env_file:
       - ./secret.env
