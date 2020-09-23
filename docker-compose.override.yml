@@ -1,9 +1,0 @@
-version: "3.7"
-
-services:
-  rstudio:
-    volumes:
-      # Local data
-      - ~/Desktop/Docker Data Testing:/home/rstudio/Docker Data Testing
-      # Data on box
-      - ~/Box/RES Data/Shapefiles/NELME_regions:/home/rstudio/NELME_regions
