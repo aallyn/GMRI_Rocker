@@ -9,8 +9,8 @@ services:
     volumes:
       # Local data
       - type: volume
-        source: ./Docker Data Testing
-        target: /home/rstudio/Docker Data Testing
+        source: ./DataTest
+        target: /home/rstudio/DataTest
         volume:
           nocopy: true
     #env_file:
