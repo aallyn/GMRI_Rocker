@@ -7,7 +7,11 @@ services:
     ports: 
       - "8787:8787"
     volumes:
-        # Local data
-      - ~/Desktop/Docker Data Testing:/home/rstudio/Docker Data Testing
+      # Local data
+      - type: volume
+        source: ~/Desktop/Docker Data Testing
+        target: /home/Docker Data Testing
+        volume:
+          nocopy: true
     #env_file:
       #- ./secret.env
