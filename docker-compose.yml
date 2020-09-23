@@ -3,6 +3,7 @@ version: "3.7"
 services:
   rstudio: 
     image: ajall1985/gmri_rocker
+    build: .
     ports: 
       - "8787:8787"
     volumes:
