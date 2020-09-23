@@ -1,0 +1,14 @@
+version: "3.7"
+
+services:
+  notebook:
+    volumes:
+      - ./notebooks:/home/jovyan/
+      # Connect to the research folder on box for access to shapefiles
+      - ~/Box/RES Data/Shapefiles/NELME_regions:/home/jovyan/NELME_regions
+      # Connect to central location for this project's Demo Data
+      - ~/Box/NSF OKN Demo Data:/home/jovyan/NSF OKN Demo Data
+      # Connect to location of Large Marine Ecosystem geojson files
+      - ~/Box/RES Data/LME_polygons:/home/jovyan/LME_polygons
+      
+
