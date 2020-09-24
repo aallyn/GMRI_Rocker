@@ -6,7 +6,7 @@ services:
     build: .
     ports: 
       - "8787:8787"
-    #volumes:
+    volumes:
       # Here is how you would add data from a local folder
       #- ./DataTest:/home/rstudio/DataTest
       # Adding GIT information
