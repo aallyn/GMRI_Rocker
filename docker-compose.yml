@@ -10,6 +10,6 @@ services:
       # Here is how you would add data from a local folder
       #- ./DataTest:/home/rstudio/DataTest
       # Adding GIT information
-      - ./.gitconfig:/home/developer/.gitconfig
+      - ~/.gitconfig:/home/developer/.gitconfig
     env_file:
       - ./secret.env
