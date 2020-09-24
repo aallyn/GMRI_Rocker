@@ -6,8 +6,10 @@ services:
     build: .
     ports: 
       - "8787:8787"
-    # Here is how you would add data from a local folder
     #volumes:
+      # Here is how you would add data from a local folder
       #- ./DataTest:/home/rstudio/DataTest
+      # Adding GIT information
+      - ./.gitconfig:/home/developer/.gitconfig
     env_file:
       - ./secret.env
