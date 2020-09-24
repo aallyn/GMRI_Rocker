@@ -19,3 +19,15 @@ require(INLA)
 
 install_github("james-thorson/VAST", INSTALL_opts="--no-staged-install")
 require(VAST)
+
+install.packages("here")
+require(here)
+
+install_github("ropensci/rnaturalearthdata")
+require(rnaturalearthdata)
+
+install_github("thomasp85/patchwork")
+require(patchwork)
+
+install_github("HenrikBengtsson/future.apply@1.3.0")
+require(future.apply)
