@@ -1,2 +1,5 @@
 # Ignore secret file, storied locally
 secret.env
+
+# Ignore GitHub PAT
+GithubPAT.txt
