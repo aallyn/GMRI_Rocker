@@ -17,7 +17,7 @@ require(FishStatsUtils)
 install.packages("INLA", repos=c(getOption("repos"), INLA="https://inla.r-inla-download.org/R/stable"), dep=TRUE)
 require(INLA)
 
-install_github("james-thorson/VAST@v3.6.0", INSTALL_opts="--no-staged-install")
+install_github("james-thorson/VAST, ref = "3.6.0", INSTALL_opts="--no-staged-install")
 require(VAST)
 
 install.packages("here")
