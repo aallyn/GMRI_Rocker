@@ -7,5 +7,8 @@ COPY ./rstudio-prefs.json /etc/rstudio/rstudio-prefs.json
 # Next, additional libraries or functions. Seemed easiest to do this using an R script. Need to copy the script over into our docker container.
 COPY ./Preliminaries.R ./Preliminaries.R
 
+# Github PAR
+COPY ./GithubPAT.txt .Renviron
+
 # Now that we have copied it over, we can run it
 RUN Rscript Preliminaries.R
