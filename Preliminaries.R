@@ -31,3 +31,15 @@ require(patchwork)
 
 install_github("HenrikBengtsson/future.apply@1.3.0")
 require(future.apply)
+
+install.packages("googledrive")
+require(googledrive)
+
+install.packages("snakecase")
+require(snakecase)
+
+install.packages("parallel")
+require(parallel)
+
+install.packages("dopParallel")
+require(parallel)
