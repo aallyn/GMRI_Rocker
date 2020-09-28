@@ -11,13 +11,13 @@ require(Matrix)
 install.packages("TMB")
 require(TMB)
 
-install_github("james-thorson/FishStatsUtils", INSTALL_opts="--no-staged-install")
+install_github("james-thorson/FishStatsUtils", ref = "2.7.0", INSTALL_opts="--no-staged-install")
 require(FishStatsUtils)
 
 install.packages("INLA", repos=c(getOption("repos"), INLA="https://inla.r-inla-download.org/R/stable"), dep=TRUE)
 require(INLA)
 
-install_github("james-thorson/VAST", ref = "3.5.0")
+install_github("james-thorson/VAST", ref = "3.5.5")
 require(VAST)
 
 install.packages("here")
