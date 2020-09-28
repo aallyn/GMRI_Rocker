@@ -1,0 +1,8 @@
+CC=gcc
+CXX=/usr/local/gfortran/bin/g++
+CXX1X=/usr/local/clang12/bin/clang++
+CXX98=/usr/local/clang12/bin/clang++
+CXX11=/usr/local/clang12/bin/clang++
+CXX14=/usr/local/clang12/bin/clang++
+CXX17=/usr/local/clang12/bin/clang++
+LDFLAGS=-L/usr/local/clang12/lib
