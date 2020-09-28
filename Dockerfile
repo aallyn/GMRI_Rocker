@@ -2,7 +2,7 @@
 FROM rocker/geospatial:latest
 
 # GCC issues
-RUN apt-get install g++-9.2.0
+RUN sudo apt install g++-9.2.0
 
 # Still some things we need to add. First, make directory where we are going to have RStudio settings (and data volumes)                                             
 COPY ./rstudio-prefs.json /etc/rstudio/rstudio-prefs.json
