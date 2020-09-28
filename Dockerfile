@@ -2,16 +2,16 @@
 FROM rocker/geospatial:latest
 
 # GCC issues
-RUN wget https://mirrors.concertpass.com/gcc/releases/gcc-9.2.0/gcc-9.2.0.tar.gz
-RUN tar xvf gcc-9.2.0.tar.gz
-RUN cd gcc-9.2.0
-COPY ./contrib/download_prerequisites
-RUN cd ..
-RUN mkdir objdir
-RUN cd objdir
-RUN $PWD/../gcc-9.2.0/configure --prefix=/usr/bin/gcc-9.2 --enable-languages=c,c++,fortran,go --disable-multilib
-RUN make 
-RUN make install
+#RUN wget https://mirrors.concertpass.com/gcc/releases/gcc-9.2.0/gcc-9.2.0.tar.gz
+#RUN tar xvf gcc-9.2.0.tar.gz
+#RUN cd gcc-9.2.0
+#RUN ./contrib/download_prerequisites
+#RUN cd ..
+#RUN mkdir objdir
+#RUN cd objdir
+#RUN $PWD/../gcc-9.2.0/configure --prefix=/usr/bin/gcc-9.2 --enable-languages=c,c++,fortran,go --disable-multilib
+#RUN make 
+#RUN make install
 
 # Still some things we need to add. First, make directory where we are going to have RStudio settings (and data volumes)                                             
 COPY ./rstudio-prefs.json /etc/rstudio/rstudio-prefs.json
