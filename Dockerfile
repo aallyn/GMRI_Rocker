@@ -7,8 +7,8 @@ RUN apt-get install -y wget
 RUN wget https://mirrors.concertpass.com/gcc/releases/gcc-9.2.0/gcc-9.2.0.tar.gz
 RUN tar xvf gcc-9.2.0.tar.gz
 RUN cd gcc-9.2.0
-RUN echo "find / -name download_prerequisites"
-RUN /contrib/download_prerequisites
+RUN ls
+RUN contrib/download_prerequisites
 RUN cd ..
 RUN mkdir gcc-build
 RUN cd gcc-build
