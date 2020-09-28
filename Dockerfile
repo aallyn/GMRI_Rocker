@@ -2,7 +2,8 @@
 FROM rocker/geospatial:latest
 
 # GCC issues
-RUN  wget http://mirrors.concertpass.com/gcc/releases/gcc-9.2.0/gcc-9.2.0.tar.gz
+RUN sed -i 's/# deb-src/deb-src/' /etc/apt/sources.list
+RUN wget http://mirrors.concertpass.com/gcc/releases/gcc-9.2.0/gcc-9.2.0.tar.gz
 RUN tar xvf gcc-9.2.0.tar.gz
 RUN cd gcc-9.2.0
 RUN apt build-dep gcc
