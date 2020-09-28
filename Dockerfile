@@ -1,6 +1,13 @@
 # Load base image, in this case the geospatial image from Rocker
 FROM rocker/geospatial:latest
 
+# GCC issues?
+RUN apt-get update \
+  && apt-get install -y \
+    gcc-9.2 g++-9.2 gcc-9.2-base \
+  && update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-9.2 100 \
+  && update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-9.2 100
+
 # Still some things we need to add. First, make directory where we are going to have RStudio settings (and data volumes)                                             
 COPY ./rstudio-prefs.json /etc/rstudio/rstudio-prefs.json
 
