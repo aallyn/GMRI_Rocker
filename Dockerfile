@@ -2,17 +2,15 @@
 FROM rocker/geospatial:latest
 
 # GCC issues
-RUN sed -i 's/# deb-src/deb-src/' /etc/apt/sources.list
 RUN wget http://mirrors.concertpass.com/gcc/releases/gcc-9.2.0/gcc-9.2.0.tar.gz
 RUN tar xvf gcc-9.2.0.tar.gz
 RUN cd gcc-9.2.0
-RUN apt build-dep gcc
 RUN ./contrib/download_prerequisites
 RUN cd ..
 RUN mkdir objdir
 RUN cd objdir
 RUN $PWD/../gcc-9.2.0/configure --prefix=/usr/bin/gcc-9.2 --enable-languages=c,c++,fortran,go --disable-multilib
-RUN make -j 8
+RUN make 
 RUN make install
 RUN cd .
 
