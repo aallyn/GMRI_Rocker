@@ -2,10 +2,10 @@
 FROM rocker/geospatial:latest
 
 # GCC issues
-RUN wget http://mirrors.concertpass.com/gcc/releases/gcc-9.2.0/gcc-9.2.0.tar.gz
+RUN wget https://mirrors.concertpass.com/gcc/releases/gcc-9.2.0/gcc-9.2.0.tar.gz
 RUN tar xvf gcc-9.2.0.tar.gz
 RUN cd gcc-9.2.0
-RUN ./contrib/download_prerequisites
+COPY ./contrib/download_prerequisites
 RUN cd ..
 RUN mkdir objdir
 RUN cd objdir
