@@ -4,9 +4,9 @@ FROM rocker/geospatial:latest
 # GCC issues
 RUN  apt-get update \
         && apt-get install -y \
-            gcc-9 g++-9 gcc-9-base \
-        && update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-9 90 \
-        && update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-9 90
+            gcc-9.2 g++-9.2 gcc-9.2-base \
+        && update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-9.2 90 \
+        && update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-9.2 90
 
 # Still some things we need to add. First, make directory where we are going to have RStudio settings (and data volumes)                                             
 COPY ./rstudio-prefs.json /etc/rstudio/rstudio-prefs.json
