@@ -12,7 +12,6 @@ RUN cd objdir
 RUN $PWD/../gcc-9.2.0/configure --prefix=/usr/bin/gcc-9.2 --enable-languages=c,c++,fortran,go --disable-multilib
 RUN make 
 RUN make install
-RUN cd .
 
 # Still some things we need to add. First, make directory where we are going to have RStudio settings (and data volumes)                                             
 COPY ./rstudio-prefs.json /etc/rstudio/rstudio-prefs.json
