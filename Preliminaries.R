@@ -3,43 +3,22 @@
 #####
 
 install.packages("devtools")
-require(devtools)
-
 install.packages("Matrix")
-require(Matrix)
-
-install.packages("TMB", dep=TRUE)
-require(TMB)
-
-#install_github("james-thorson/FishStatsUtils", ref = "2.7.0")
-#require(FishStatsUtils)
-
-#install.packages("INLA", repos=c(getOption("repos"), INLA="https://inla.r-inla-download.org/R/stable"), dep=TRUE)
-#require(INLA)
-
-#install_github("james-thorson/VAST", ref = "3.5.0")
-#require(VAST)
-
-#install.packages("here")
-#require(here)
-
-#install_github("ropensci/rnaturalearthdata")
-#require(rnaturalearthdata)
-
-#install_github("thomasp85/patchwork")
-#require(patchwork)
-
-#install_github("HenrikBengtsson/future.apply@1.3.0")
-#require(future.apply)
-
-#install.packages("googledrive")
-#require(googledrive)
-
-#install.packages("snakecase")
-#require(snakecase)
-
-#install.packages("parallel")
-#require(parallel)
-
-#install.packages("doParallel")
-#require(doParallel)
+devtools::install_github("kaskr/adcomp/TMB")
+install.packages("INLA", repos=c(getOption("repos"), INLA="https://inla.r-inla-download.org/R/stable"), dep=TRUE)
+install.packages('udunits2', type = 'source', repo = 'cran.rstudio.com', configure.args = c(udunits2 = "--with-udunits2-lib=/usr/local/lib"))
+install.packages('units', type = 'source', repo = 'cran.rstudio.com', configure.args = c(units = "--with-udunits2-lib=/usr/local/lib"))
+devtools::install_github("james-thorson/FishStatsUtils", ref = "2.5.0", INSTALL_opts="--no-staged-install", configure.args = c(udunits2 = "--with-udunits2-include=/usr/include/udunits2"))
+devtools::install_github("james-thorson/VAST", ref = "3.3.0", INSTALL_opts="--no-staged-install", configure.args = c(udunits2 = "--with-udunits2-include=/usr/include/udunits2"))
+devtools::install_github("james-thorson/FishData")
+install.packages("sf")
+install.packages("here")
+install.packages("googledrive")
+install.packages("snakecase")
+install_github("ropensci/rnaturalearthdata")
+install_github("thomasp85/patchwork")
+install_github("HenrikBengtsson/future.apply@1.3.0")
+install.packages("googledrive")
+install.packages("snakecase")
+install.packages("parallel")
+install.packages("doParallel")
