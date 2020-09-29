@@ -1,5 +1,5 @@
 # Load base image, in this case the geospatial image from Rocker
-FROM rocker/geospatial:3.6.3
+FROM rocker/geospatial:4.0.2
 
 # GCC issues
 #RUN wget https://mirrors.concertpass.com/gcc/releases/gcc-9.2.0/gcc-9.2.0.tar.gz
@@ -24,3 +24,7 @@ COPY ./GithubPAT.txt .Renviron
 
 # Now that we have copied it over, we can run it
 RUN Rscript Preliminaries.R
+
+# Copy Makevars
+RUN mkdir .R
+COPY ./Makevars .R/Makevars
