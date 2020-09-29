@@ -1,5 +1,5 @@
 # Load base image, in this case the geospatial image from Rocker
-FROM rocker/geospatial:3.6.0
+FROM rocker/geospatial:3.6.3
 
 # GCC issues
 #RUN wget https://mirrors.concertpass.com/gcc/releases/gcc-9.2.0/gcc-9.2.0.tar.gz
