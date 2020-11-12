@@ -6,4 +6,5 @@ services:
     volumes:
         - ~/Box/RES Data/Shapefiles:/home/rstudio/Shapefiles
         - ~/Box/Mills Lab/Projects/ForecastingChallenge:/home/rstudio/ForecastingChallenge
+        - ~/Desktop/Temp Results:/home/rstudio/Temp Results
      
