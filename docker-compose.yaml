@@ -9,7 +9,7 @@ services:
     volumes:
       # Here is how you would add data from a local folder
       #- ./DataTest:/home/rstudio/DataTest
-      # Adding GIT information
-      - ~/.gitconfig:/etc/gitconfig
+      # Adding GIT information -- this might be causing an error?
+      #- ~/.gitconfig:/etc/gitconfig
     env_file:
       - ./secret.env
