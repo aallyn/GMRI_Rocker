@@ -4,6 +4,6 @@ services:
   rstudio:
     # Here is how you could add data from a folder on Box
     volumes:
-        - ~/Box/RES Data/Shapefiles:/home/andrew.allyn@gmail.com/Shapefiles
-        - ~/Box/Mills Lab/Projects/ForecastingChallenge:/home/andrew.allyn@gmail.com/ForecastingChallenge
+        - ~/Box/RES Data/Shapefiles:/data/Shapefiles
+        - ~/Box/Mills Lab/Projects/ForecastingChallenge:/ForecastingChallenge
      
