@@ -37,11 +37,13 @@ With that, I opened a web browser and typed "http://localhost:8787", which opene
 # Working with Digital Ocean
 The above steps work great for using my local machine. Though, there is some additional work when it comes to trying to use the container on a remote server, like DigitalOcean. For that, I substituted in the following steps between steps 4 and 5 above. 
 
+Generate a new public key on your local machine and copy it (https://dev.to/gamebusterz/digitalocean-permission-denied-publickey-168p)
+
 5b. Set up DigitalOcean account and specify a new droplet  
 - Go to https://www.digitalocean.com/  
-- Set up a new account if necessary and then submit a ticket to request access to all of the droplet options (some of these are likely greyed out until you do this)  
-- Create a new project  
-- Deploy a new droplet within the new project, use the Ubuntu option  
+- Set up a new account if necessary and then submit a ticket to request access to all of the droplet options (some of these are likely greyed out until you do this)  - Copy over your key
+- Create a new project 
+- Deploy a new droplet within the new project, use the Ubuntu option and select the ssh key you copied over
 - Copy droplet IP address  
 
 6b. Install docker on the DigitalOcean droplet  
@@ -54,7 +56,9 @@ The above steps work great for using my local machine. Though, there is some add
   + `sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu bionic stable"`  
   + `sudo apt update`  
   + `apt-cache policy docker-ce`  
-  + `sudo apt install docker-ce`  
+  + `sudo apt install docker-ce` 
+- I then git cloned the repo
+- Next cd into the docker repo
   
   After completing those interim steps, I returned to the above workflow for the `make up` call. Then, to access the container on the DigitalOcean droplet, I opened a web broswer to web "http://IPaddressoftheDigitalOceanDroplet:8787" as opposed to "http://localhost:8787". I then worked as I outlined above, while adding one additional step to shut down the droplet when I was finished with it.  
 
