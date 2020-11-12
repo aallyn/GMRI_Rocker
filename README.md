@@ -59,6 +59,7 @@ Generate a new public key on your local machine and copy it (https://dev.to/game
   + `sudo apt install docker-ce` 
 - I then git cloned the repo
 - Next cd into the docker repo
+- Next create your secret.env file using nano
   
   After completing those interim steps, I returned to the above workflow for the `make up` call. Then, to access the container on the DigitalOcean droplet, I opened a web broswer to web "http://IPaddressoftheDigitalOceanDroplet:8787" as opposed to "http://localhost:8787". I then worked as I outlined above, while adding one additional step to shut down the droplet when I was finished with it.  
 
