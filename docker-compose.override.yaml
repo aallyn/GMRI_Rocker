@@ -6,4 +6,4 @@ services:
     volumes:
         - ~/Box/RES Data/Shapefiles:/home/andrew.allyn@gmail.com/Shapefiles
         - ~/Box/Mills Lab/Projects/ForecastingChallenge:/home/andrew.allyn@gmail.com/ForecastingChallenge
-        - ./.ssh:/home/andrew.allyn@gmail.com/.ssh     
+        - ./.ssh/authorized_keys:/home/andrew.allyn@gmail.com/.ssh/authorized_keys     
