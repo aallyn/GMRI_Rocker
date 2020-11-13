@@ -53,10 +53,17 @@ Generate a new public key on your local machine and copy it (https://dev.to/game
   + `sudo apt update`  
   + `sudo apt install apt-transport-https ca-certificates curl software-properties-common`  
   + `curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -`  
-  + `sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu bionic stable"`  
+  + `sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu bionic stable"` 
+  + `sudo curl -L "https://github.com/docker/compose/releases/download/1.27.4/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose`
+  + `sudo chmod +x /usr/local/bin/docker-compose`
   + `sudo apt update`  
   + `apt-cache policy docker-ce`  
   + `sudo apt install docker-ce` 
+  + `sudo apt install make` 
+  + `sudo apt install mtools` 
+  
+- Add rstudio user name as a super doer: https://www.digitalocean.com/community/tutorials/initial-server-setup-with-ubuntu-14-04
+
 - I then git cloned the repo
 - Next cd into the docker repo
 - Next create your secret.env file using nano
