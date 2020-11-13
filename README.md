@@ -61,6 +61,8 @@ Generate a new public key on your local machine and copy it (https://dev.to/game
   + `sudo apt install docker-ce` 
   + `sudo apt install make` 
   + `sudo apt install mtools` 
+  
+- Add rstudio user name as a super doer: https://www.digitalocean.com/community/tutorials/initial-server-setup-with-ubuntu-14-04
 
 - I then git cloned the repo
 - Next cd into the docker repo
