@@ -7,4 +7,4 @@ services:
         #- ~/Box/RES Data/Shapefiles:/home/andrew.allyn@gmail.com/Shapefiles
         #- ~/Box/Mills Lab/Projects/ForecastingChallenge:/home/andrew.allyn@gmail.com/ForecastingChallenge
         #- ~/Desktop/Temp Results:/home/ubuntu/Temp Results
-        - ./Temp Results:/home/andrew.allyn@gmail.com/Temp Results     
+        - /home/ubuntu/Temp Results:/home/andrew.allyn@gmail.com/Temp Results     
