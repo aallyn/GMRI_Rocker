@@ -46,7 +46,9 @@ Generate a new public key on your local machine and copy it (https://dev.to/game
 - Deploy a new droplet within the new project, use the Ubuntu option and select the ssh key you copied over
 - Copy droplet IP address  
 
-6b. Install docker on the DigitalOcean droplet  
+6b. Install docker on the DigitalOcean droplet 
+- SCP files from local machine to the DO server `scp -r /path/to/my/files root@0.0.0.0:/path/on/remote/droplet`
+
 - In terminal, I checked that I was still in the right directory, which is the one for this docker container.  
 - In terminal, I typed `ssh root@IPaddressoftheDigitalOceanDroplet`  
 - In terminal, I then ran the following to install docker on the DigitalOcean droplet
