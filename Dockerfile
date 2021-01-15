@@ -1,17 +1,18 @@
 # Load base image, in this case the geospatial image from Rocker
 FROM rocker/geospatial:latest
 
-# GCC issues
-#RUN wget https://mirrors.concertpass.com/gcc/releases/gcc-9.2.0/gcc-9.2.0.tar.gz
-#RUN tar xvf gcc-9.2.0.tar.gz
-#RUN cd gcc-9.2.0
-#RUN ./contrib/download_prerequisites
-#RUN cd ..
-#RUN mkdir gcc-build
-#RUN cd gcc-build
-#RUN ../gcc-9.2.0/configure -v --build=x86_64-linux-gnu --host=x86_64-linux-gnu --target=x86_64-linux-gnu --prefix=/usr/local/gcc-9.2 --enable-checking=release --enable-languages=c,c++,fortran --disable-multilib --program-suffix=-9.2
-#RUN make -j 2
-#RUN make install
+# Install docker on the droplet
+RUN apt update
+RUN apt apt install apt-transport-https ca-certificates curl software-properties-common
+RUN curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+RUN add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu bionic stable"
+RUN curl -L "https://github.com/docker/compose/releases/download/1.27.4/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+RUN chmod +x /usr/local/bin/docker-compose
+RUN apt update
+RUN apt-cache policy docker-ce
+RUN apt install docker-ce
+RUN apt install make
+RUN apt install mtools
 
 # Still some things we need to add. First, make directory where we are going to have RStudio settings (and data volumes)                                             
 COPY ./rstudio-prefs.json /etc/rstudio/rstudio-prefs.json
