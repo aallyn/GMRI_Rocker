@@ -1,5 +1,5 @@
 # Load base image, in this case the geospatial image from Rocker
-FROM rocker/geospatial:latest
+FROM rocker/geospatial:4.0.2
 
 # Still some things we need to add. First, make directory where we are going to have RStudio settings (and data volumes)                                             
 COPY ./rstudio-prefs.json /etc/rstudio/rstudio-prefs.json
