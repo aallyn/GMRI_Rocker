@@ -6,9 +6,11 @@ This repository supports a docker container that I built (with a lot of help) to
 2. On my local machine, I opened up the terminal and typed the following commands:  
 `cd ~/GitHub/`  
 `git clone repo_link`
-3. Next, I went to work creating the necessary docker files. This is all really new to me and I feel like I know just enough to be dangerous. I relied heavily on some nice web resources listed below and [Alex K at GMRI](https://github.com/abkfenris). Here are the files I created.  
+3. Next, I went to work creating the necessary docker files. This was (and still is) all really new to me and I feel like I know just enough to be dangerous. I relied heavily on some nice web resources listed below and [Alex K at GMRI](https://github.com/abkfenris). Here are the files I created.  
+
 a. A `Dockerfile`. The `Dockerfile` is basically a recipe for recreating a compute environment. I'm sure I am missing some of what it can do, but I basically think about it like a list of instructions to create an identical RStudio session as one I would run if I were to open RStudio on my local machine, along with all the necessary packages used in my analysis. For this, I started by checking out the [rocker project](https://hub.docker.com/u/rocker). There's a variety of different images available depending on your particular analysis. For example, if you are doing a lot of machine learning work, you might be more interested in the rocker/ml-verse image. For this docker container, I built from the rocker/geospatial image. With this as the base, I then added a few things. First, I copied the settings for my rstudio sessions on my local machine and added them to the container. This means that when I do open RStudio in the container, it will have the same appearance and behavior as RStudio on my local machine. Next, there were additional packages that I wanted to have installed in the docker container not included in the base image. I am sure there are other ways to do this. I decided the easiest thing was to write an .R script that had the `install` and `library` calls for what I needed. Within the dockerfile, I then instruct the container to copy the .R file inside the container and run the code.  
-b. I created a `docker-compose.yml` file and a `docker-compose.override.yml` file. The `docker-compose.yml` file defines the services that are available within the container. In this case, rstudio. In addition, it provides a nice way to transfer data from our computer (or network) to the docker container using "volumes", which would be available for all users. For this docker image, I give an example of mounting a local data volume in the `docker-compose.yml` file (which is commented out currently). Additionally, I give an example for mounting data from a cloud based storage program with the `docker-compose.override.yml` file. The path to the cloud storage is likely going to be unique for each user and to work, each user would essentially need to edit this file. It also provides the opportunity to mount a volume for a specific project. Finally, in `docker-compose.yml` I use a `secret.env` file to load in my RStudio login and password credentials.  
+
+b. I created a `docker-compose.yaml` file and a `docker-compose.override.yaml` file. The `docker-compose.yml` file defines the services that are available within the container. In this case, rstudio. In addition, it provides a nice way to transfer data from our computer (or network) to the docker container using "volumes", which would be available for all users. For this docker image, I give an example of mounting a local data volume in the `docker-compose.yml` file (which is commented out currently). Additionally, I give an example for mounting data from a cloud based storage program with the `docker-compose.override.yml` file. The path to the cloud storage is likely going to be unique for each user and to work, each user would essentially need to edit this file. It also provides the opportunity to mount a volume for a specific project. Finally, in `docker-compose.yml` I use a `secret.env` file to load in my RStudio login and password credentials.  
 c. Next, I created a `Makefile`. My general understanding is the Makefile provides an easy way of capturing a lot of the commands you might enter in the terminal to start up and shut down the docker container. After creating this file, things are a bit easier as I only need to enter `make up` in the terminal and then `make down`.  
 d. Finally, I created a `.gitignore` file. This can include a number of different things. Here, I used it mainly to make sure my `secret.env` file with user name and password are not stored on GitHub. 
 4. After creating the above files, I went ahead and stage, commited and pushed them to the GitHub repo. I also did this whenever I needed to make any changes to the docker files.  
@@ -35,22 +37,50 @@ With that, I opened a web browser and typed "http://localhost:8787", which opene
 `make down` 
 
 # Working with Digital Ocean
-The above steps work great for using my local machine. Though, there is some additional work when it comes to trying to use the container on a remote server, like DigitalOcean. For that, I substituted in the following steps between steps 4 and 5 above. 
+I recently (Aug 2021) came across [Danny Foster's blog post](https://www.dfoster.science/post/r-on-digital-ocean/) about using R and it has some additional capacity that I think will be useful, particularly using Dropbox and mounted Volumes for large file management. In his workflow, Danny actually does the Digital Ocean stuff first and then the Docker stuff. I'm not sure if one way is better than the other. In any event, here is what I did to get started with Digital Ocean.  
 
-Generate a new public key on your local machine and copy it (https://dev.to/gamebusterz/digitalocean-permission-denied-publickey-168p)
+1. First, set up an account at [Digital Ocean](https://www.digitalocean.com/) and then, if necessary, submit a ticket to request access to all of the droplet size options. 
+2. Next, create a small template droplet. We can always scale up to something bigger based on this template. For this template, select the Ubuntu distribution, then a basic plan with 4GB/2 CPUs (~$24 month). Next, select add volume to the block storage and type in the GB size you will need -- I went with 300 GB. For the configuration options, the automatic formatting and mounting and Ext4 file system should be fine. Then, select a data center somewhat close to you and add the monitoring additional option. We will also want to add a new SSH Key, generated by following [Jenny Bryan's instructions](https://happygitwithr.com/ssh-keys.html). Finally, we can choose a host name and associated tags and then hit create droplet. 
+3. Setting up networking. The droplet that was just created has a random IP address and we can connect to the droplet using that IP address. But, the IP address will change everytime. For example, when we go to scale things up from this small template droplet to something with more compute power. This can be a bit annoying so a floating IP address is a nice thing to have. To get the floating IP address, in the browser where we set up the droplet, hit the "Networking" tab on the left hand menu bar under "Manage". This should bring up a new page. Select the "Floating IPs" tab and then find the template droplet and assign it a floating IP address. Next, we can have this floating IP point to a domain we own by hitting the "Domains" tab. In the "Domains" manager, we can then create a new record, which will be an "A" type listing, with HOSTNAME == "your_prefix", WILL DIRECT TO = IPAddress and TTL = 60. 
+4. I couldn't actually conenct to the droplet through Cyberduck (an SSH client). So, I eventually just went and copied the floating IP address of the droplet and then in a new terminal window, I typed `ssh root@floatingIPaddress`. This seemed to work and got me connected and I picked back up with Danny's instructions at the "Make sure block storage volume is mounted and attached."
+5. Working with the mounted volume. To double check that the mounted volume is there, I did `cd /mnt` and then `ls`, which revealed the name of the mounted volume that Digital Ocean automatically configured for me (volume_nyc1_01). After confirming that looked good, I created a mount point for the volume and then did some things (changing fstab), which Danny recommended and I have no idea what they actually do. 
+6. Setting up a non-root user. Again, this was all just following Danny's instructions. I think the general idea here is that instead of a `root` user, we can actually create named users, which should be helpful down the line with coding and file transfers. In all of the commands below, I substituted `aallyn` for `your_user`.
+`root@your_domain:~# adduser --system --group your_user`  
 
-5b. Set up DigitalOcean account and specify a new droplet  
-- Go to https://www.digitalocean.com/  
-- Set up a new account if necessary and then submit a ticket to request access to all of the droplet options (some of these are likely greyed out until you do this)  - Copy over your key
-- Create a new project 
-- Deploy a new droplet within the new project, use the Ubuntu option and select the ssh key you copied over
-- Copy droplet IP address  
+`root@your_domain:~# usermod -u 1000 your_user` 
 
-6b. Install docker on the DigitalOcean droplet 
-- SCP files from local machine to the DO server `scp -r /path/to/my/files root@0.0.0.0:/path/on/remote/droplet`
+`root@your_domain:~# mkdir /home/your_user/.ssh`  
 
-- In terminal, I checked that I was still in the right directory, which is the one for this docker container.  
-- In terminal, I typed `ssh root@IPaddressoftheDigitalOceanDroplet`  
+`root@your_domain:~# chmod 0700 /home/your_user/.ssh/`  
+
+`root@your_domain:~# cp -Rfv /root/.ssh /home/your_user/`  
+
+`root@your_domain:~# chown -Rfv your_user.your_user /home/your_user/.ssh`  
+
+`root@your_domain:~# chown -R your_user:your_user /home/your_user/`  
+
+`root@your_domain:~# chown -R your_user:your_user /mnt/volume_nyc1_01/`  
+
+`root@your_domain:~# gpasswd -a your_user sudo`  
+
+`root@your_domain:~# echo "your_user ALL=(ALL) NOPASSWD: ALL" | (EDITOR="tee -a" visudo)`  
+
+`root@your_domain:~# service ssh restart`  
+
+`root@your_domain:~# usermod -s /bin/bash your_user`  
+
+`root@your_domain:~# usermod -a -G docker your_user`  
+
+`logout`  
+
+If for some reason you get an errror that docker is not a recognized group when running the second to last line, you can do  
+`sudo groupadd docker`
+and then  
+`usermod -a -G docker your_user`.
+
+7. Setting up SSL certificates. I skipped this part for now as I am not sure if the domain I was using (aallyn.github.io) is really considered an acceptable domain and the issues I had in step 4 above.
+
+8. Installing docker. In terminal, I checked that I was still in the right directory, which is the one for this docker container. Then In terminal, I typed `ssh your_user@IPaddressoftheDigitalOceanDroplet`  
 - In terminal, I then ran the following to install docker on the DigitalOcean droplet
   + `sudo apt update`  
   + `sudo apt install apt-transport-https ca-certificates curl software-properties-common`  
@@ -64,7 +94,6 @@ Generate a new public key on your local machine and copy it (https://dev.to/game
   + `sudo apt install make` 
   + `sudo apt install mtools` 
   
-- Add rstudio user name as a super doer: https://www.digitalocean.com/community/tutorials/initial-server-setup-with-ubuntu-14-04
 
 - I then git cloned the repo
 - Next cd into the docker repo
