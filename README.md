@@ -94,6 +94,7 @@ and then
   + `sudo apt install make` 
   + `sudo apt install mtools` 
   
+  9. Docker time!
 
 - I then git cloned the repo
 - Next cd into the docker repo
