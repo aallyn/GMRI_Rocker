@@ -103,6 +103,11 @@ and then
   
   After completing those interim steps, I returned to the above workflow for the `make up` call. Then, to access the container on the DigitalOcean droplet, I opened a web broswer to web "http://IPaddressoftheDigitalOceanDroplet:8787" as opposed to "http://localhost:8787". I then worked as I outlined above, while adding one additional step to shut down the droplet when I was finished with it.  
 
+  10. Next, we need to make sure we have access to the mounted volume storage. To do this, we edit the `docker-compose.yaml` file with the following lines to the "volumes" portion
+      `- $HOME/:/home/aallyn/`
+      `- /mnt/volume_nyc1_01/:/home/aallyn/block_storage/`
+      
+
 # Other helpful resources #
 For more help, check out:  
 - Jenny Bryan (Git/GitHub and R): https://happygitwithr.com/  

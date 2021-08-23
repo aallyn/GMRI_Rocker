@@ -6,7 +6,9 @@ services:
     build: .
     ports: 
       - "8787:8787"
-    #volumes:
+    volumes:
+      - $HOME/:/home/aallyn/
+      - /mnt/volume_nyc1_01/:/home/aallyn/block_storage/
       # Here is how you would add data from a local folder
       #- ./DataTest:/home/rstudio/DataTest
       # Adding GIT information -- this might be causing an error?
