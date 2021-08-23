@@ -16,3 +16,6 @@ RUN Rscript Preliminaries.R
 # Copy Makevars
 RUN mkdir .R
 COPY ./Makevars .R/Makevars
+
+# Start dropbox
+RUN echo "/mnt/volume_nyc1_01/dropbox.py start"

@@ -106,7 +106,12 @@ and then
   10. Next, we need to make sure we have access to the mounted volume storage. To do this, we edit the `docker-compose.yaml` file with the following lines to the "volumes" portion
       `- $HOME/:/home/aallyn/`
       `- /mnt/volume_nyc1_01/:/home/aallyn/block_storage/`
-      
+  
+
+  11. Dropbox all the same except for adding 
+  `sudo apt install libc6 libglapi-mesa libxdamage1 libxfixes3 libxcb-glx0 libxcb-dri2-0 libxcb-dri3-0 libxcb-present0 libxcb-sync1 libxshmfence1 libxxf86vm1` before running the phython3 command.
+
+  12. 
 
 # Other helpful resources #
 For more help, check out:  
