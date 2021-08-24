@@ -6,7 +6,7 @@ COPY ./rstudio-prefs.json /etc/rstudio/rstudio-prefs.json
 
 # Next, additional libraries or functions. Seemed easiest to do this using an R script. Need to copy the script over into our docker container.
 COPY ./Preliminaries.R ./Preliminaries.R
-COPY ~/GitHub/sdm_workflow/scratch/aja/TargetsSDM/R/vast_functions.R ./vast_functions.R
+COPY ./vast_functions.R ./vast_functions.R
 # Now that we have copied it over, we can run it
 RUN Rscript Preliminaries.R
 RUN Rscript vast_functions.R
