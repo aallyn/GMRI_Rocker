@@ -49,7 +49,7 @@ With that, I opened a web browser and typed "http://localhost:8787", which opene
 `make down` 
 
 # Working with Digital Ocean
-I recently (Aug 2021) came across [Danny Foster's blog post](https://www.dfoster.science/post/r-on-digital-ocean/) about using R/Docker and Digital Ocean. It has some additional capacity that I thought would be useful, particularly using Dropbox and mounted Volumes for large file management. In his workflow, Danny actually does the Digital Ocean stuff first and then the Docker stuff. I'm not sure if one way is better than the other? In any event, here is what I did to get started with Digital Ocean, which largely follows Danny's recommendations. 
+I recently (Aug 2021) came across [Danny Foster's blog post](https://www.dfoster.science/post/r-on-digital-ocean/) about using R/Docker and Digital Ocean. It has some additional capacity that I thought would be useful, particularly using Dropbox and mounted Volumes for large file management. In his workflow, Danny actually does the Digital Ocean stuff first and then the Docker stuff. I'm not sure if one way is better than the other. In any event, here is what I did to get started with Digital Ocean, which largely follows Danny's recommendations. 
 
 1. The first thing I did was set up an account at [Digital Ocean](https://www.digitalocean.com/). When I did that, I had a bunch of resources that weren't available to me. To get access, I had to submit a ticket to request access to all of the droplet size options.  
 
@@ -107,7 +107,7 @@ and then  `usermod -a -G docker your_user`. That seemed to fix things.
   + `sudo apt install make` 
   + `sudo apt install mtools` 
   
-9. With docker installed, it's time to set up all of the files needed. Danny does this on the fly. For me, I think if I do this again, I will likely just jump to step one in the above section that covers how to [set up a docker container as a GitHub repository](#Setting up a docker container repository). With all of those pieces taken care of, then it just became a matter of cloning the docker Github repository onto the droplet. To do that, I copied the address from github.com for the docker repo and then typed `git clone docker_repo_url` into the command line. Then, I did `cd ~/docker_repo_name`. Within that folder, I created both a "secret.env" file and a "GitHubPAT.text" file using `nano`. Finally, I typed `make up`, which again, only works because I had made a "makefile" earlier when setting up the docker container.
+9. With docker installed, it's time to set up all of the files needed. Danny does this on the fly. For me, I think if I do this again, I will likely just jump to step one in the above section that covers how to [set up a docker container as a GitHub repository](#Setting up a docker container repository). With all of those pieces taken care of, then it just became a matter of cloning the docker Github repository onto the droplet. To do that, I copied the address from github.com for the docker repo and then typed `git clone docker_repo_url` into the command line. Then, I did `cd ~/docker_repo_name`. Within that folder, I created both a "secret.env" file and a "GitHubPAT.text" file using `nano secret.env` and then `nano GitHubPAT.txt`. Finally, I typed `make up`, which again, only works because I had made a "makefile" earlier when setting up the docker container.
 
 10. To access and use the container on the DigitalOcean droplet, I opened a web broswer to web "http://IPaddressoftheDigitalOceanDroplet:8787" as opposed to "http://localhost:8787". 
 
