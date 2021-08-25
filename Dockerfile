@@ -19,4 +19,4 @@ RUN mkdir .R
 COPY ./Makevars .R/Makevars
 
 # Start dropbox
-RUN echo "python3 /mnt/volume_nyc1_01/dropbox.py start"
+#RUN echo "python3 /mnt/volume_nyc1_01/dropbox.py start"

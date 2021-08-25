@@ -1,3 +1,6 @@
+dropbox_connect:
+	echo "python3 /mnt/volume_nyc1_01/dropbox.py start"
+
 up: down
 	docker-compose up -d --build
 	docker-compose logs -f
