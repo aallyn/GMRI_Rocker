@@ -17,6 +17,3 @@ RUN Rscript vast_functions.R
 # Copy Makevars
 RUN mkdir .R
 COPY ./Makevars .R/Makevars
-
-# Start dropbox
-#RUN echo "python3 /mnt/volume_nyc1_01/dropbox.py start"
