@@ -119,10 +119,43 @@ and then  `usermod -a -G docker your_user`. That seemed to fix things.
 
 12. After doing all this, I took a snapshot of the image as recommended by Danny. I did this before completing the final piece of the puzzle, which involved connecting the block storage to a folder on my Dropbox account. For this, I followed Danny's instructions exactly, with one small edit. I downloaded the "dropbox.py" script as he suggested by running 
 
-  11. Dropbox all the same except for adding 
+11. Dropbox all the same except for adding 
   `sudo apt install libc6 libglapi-mesa libxdamage1 libxfixes3 libxcb-glx0 libxcb-dri2-0 libxcb-dri3-0 libxcb-present0 libxcb-sync1 libxshmfence1 libxxf86vm1` before running the phython3 command.
 
-  12. 
+12. Having to delete the know_host ssh key each time /Users/aallyn/.ssh/known_hosts
+
+13. Lost dropbox in snapshot, trying something else...
+`cd ./mnt/volume_nyc1_03 `
+`curl -Lo dropbox-linux-x86_64.tar.gz https://www.dropbox.com/download?plat=lnx.x86_64`
+`sudo mkdir -p ./opt/dropbox`
+`sudo tar xzfv dropbox-linux-x86_64.tar.gz --strip 1 -C ./opt/dropbox`
+`./opt/dropbox/dropboxd`
+
+Still nothing....
+`wget -O /mnt/volume_nyc1_03/dropbox.py "https://www.dropbox.com/download?dl=packages/dropbox.py"`
+nano /mnt/volume_nyc1_03/dropbox.py
+python3 /mnt/volume_nyc1_03/dropbox.py start -i
+python3 dropbox.py start
+python3 dropbox.py throttle 'unlimited' 'unlimited'
+cd ./Dropbox
+python3 /mnt/volume_nyc1_03/dropbox.py exclude add 'Andrew' 'Waterfowl' 'Atticus' 'Camera Uploads'
+
+Now, instead of unmounting before the snapshot (like what Danny does) Going to try to snapshot just after powering down...
+
+On restart...
+cd /mnt/volume_nyc1_03
+python3 dropbox.py start
+
+That worked!!!!
+
+
+# Docker hub updating -- need to do this so each worker has access to everything they need
+docker login
+docker build .
+docker tag ajall1985/gmri_rocker:tag name
+docker push ajall1985/gmri_rocker:tag name
+
+Then Andrew Heiss tutorial -- 
 
 # Other helpful resources #
 For more help, check out:  
@@ -132,3 +165,7 @@ For more help, check out:
 - Derek Powell (Docker, Git/GitHub and Docker Hub): http://www.derekmpowell.com/posts/2018/02/docker-tutorial-2/  
 - Joel Nitta (https://www.joelnitta.com/post/how-to-run-an-r-analysis-anywhere/how-to-run-an-r-analysis-anywhere/)  
 - Brian Hogan (https://www.digitalocean.com/community/tutorials/how-to-install-and-use-docker-on-ubuntu-18-04) 
+
+
+> options(httr_oob_default=TRUE)
+> drive_auth()
