@@ -6,7 +6,7 @@ services:
     build: .
     ports: 
       - "8787:8787"
-    volumes:
+    #volumes:
       # This will work if docker container is started on local host, doesn't work with a droplet
       # - ~/GitHub/sdm_workflow/scratch/aja/TargetsSDM:/home/aallyn/TargetsSDM
     env_file:
