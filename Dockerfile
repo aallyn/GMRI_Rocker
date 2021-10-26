@@ -1,5 +1,10 @@
+# Loading rclone stuff first
+FROM rclone/rclone as rclone-source
+
 # Load base image, in this case the geospatial image from Rocker
 FROM rocker/geospatial:4.0.4
+
+COPY --from=rclone-source /usr/local/bin/rclone /usr/local/bin/rclone
 
 # Still some things we need to add. First, make directory where we are going to have RStudio settings (and data volumes)                                             
 COPY ./rstudio-prefs.json /etc/rstudio/rstudio-prefs.json

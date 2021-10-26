@@ -14,6 +14,8 @@ Along with the docker information, the other piece of this repo relates to using
 
 a. A `Dockerfile`. The `Dockerfile` is a recipe for recreating a compute environment. I'm sure I am missing some of what it can do, but I basically think about it like a list of instructions to create an identical RStudio session to the one that starts on my local machine if I open RStudio, along with all the necessary packages used in my analysis. For this, I started by checking out the [rocker project](https://hub.docker.com/u/rocker). There's a variety of different images available depending on your particular analysis. For example, if you are doing a lot of machine learning work, you might be more interested in the rocker/ml-verse image. For this docker container, I built from the rocker/geospatial image. With this as the base, I then added a few things. First, I copied the settings for my rstudio sessions on my local machine and added them to the container. This means that when I do open RStudio in the container, it will have the same appearance and behavior as RStudio on my local machine. Next, there were additional packages that I wanted to have installed in the docker container not included in the base image. I am sure there are other ways to do this. I decided the easiest thing was to write an .R script that had the `install` and `library` calls for what I needed. Within the dockerfile, I then instruct the container to copy the .R file inside the container and run the code.  
 
+**Note as of Fall 2021** I was really running into some issues with moving data into and out of the container when it was eventually run on a DigitalOcean drople. I tried a bunch of different stuff (e.g., mounting a volume storage to Dropbox) and nothing seemed to work. As a last attempt, I tried out the `Rclone` copy and sync functionality. This meant adding this into the docker image and the `Dockerfile` now reflects this with essentially two `FROM` statements.
+
 b. I created a `docker-compose.yaml` file and a `docker-compose.override.yaml` file. The `docker-compose.yaml` file defines the services that are available within the container. In this case, rstudio. In addition, it provides a nice way to transfer data from our computer (or network) to the docker container using "volumes", which would be available for all users. For this docker image, I give an example of mounting a local data volume in the `docker-compose.yaml` file (which is commented out currently). Additionally, I give an example for mounting data from a cloud based storage program with the `docker-compose.override.yaml` file. The path to the cloud storage is likely going to be unique for each user and to work, each user would essentially need to edit this file. It also provides the opportunity to mount a volume for a specific project. Finally, in `docker-compose.yaml` I use a `secret.env` file to load in my RStudio login and password credentials.  
 
 c. Next, I created a `Makefile`. My general understanding is the Makefile provides an easy way of capturing a lot of the commands you might enter in the terminal to start up and shut down the docker container. After creating this file, things are a bit easier as I only need to enter `make up` in the terminal and then `make down`.  
@@ -34,19 +36,34 @@ The first time calling `make up`, it took a little while as the docker container
 `rstudio-1 | [services.d] done.` in the terminal window.  
 With that, I opened a web browser and typed "http://localhost:8787", which opened an RStudio instance in the web browser, a carbon copy of the one I have if I opened the RStudio app on my local machine.
 
-8.  After getting the computing environmnet set up, the next thing I needed was to get my code and data into the container. For the code bits and small files, I used GitHub. For larger files, I use the volume approach discused earlier. To get the code bits and small files, I went to my GitHub account online and copied the address of the repo that has the code/data/etc (analysis_repo_link) I wanted to bring in the container. Back in the RStudio instance on the web browser, I started a new project, selected version controlled, Git, and then pasted the address for the repo I had just copied. I then opened up a terminal window and typed the following to make the full connection to the GitHub repo and pull in its contents  
+6. After connecting to the local RStudio instance running inside the docker container, I start to work to more easily move files between local computer/docker container/droplet and google drive. To do this, I followed the instructions here post build: https://rclone.org/drive/, with one exception. When prompted to say yes or no, I selected no as I was in a remote/headless situation running RStudio on the local host. 
+
+To confirm this all worked, I then typed `rclone lsd your_remote_name:` and was relieved to see all of the google drive folders listed. To get these files into the docker container, I ran the following two commands:
+
+`mkdir /home/aallyn/destination_folder_name`
+`rclone sync "your_remote_name:your_remote_folder_path" "/home/aallyn/destination_folder_name"`
+
+This took a little time, but eventually I could see I had all of the folders/files I needed! I also wrote out a simple .csv file from R and then did the following to see if the file was copied to google drive, and it was!
+`rclone copy --update "/home/aallyn/destination_folder_name/testing.csv" "your_remote_name:your_remote_folder_path/testing.csv"`
+
+8.  After getting the computing environmnet set up, the next thing I needed was to get my code and data into the container. For the code bits and small files, I used GitHub. For larger files, I use the volume approach discused earlier. To get the code bits and small files, I went to my GitHub account online and copied the address of the repo that has the code/data/etc (analysis_repo_link) I wanted to bring in the container. Back in the RStudio instance on the web browser, I started a new project, selected version controlled, Git, and then pasted the address for the repo I had just copied. I then opened up a terminal window and typed the following to make the full connection to the GitHub repo and pull in its contents
+`git init`  
 `git remote add origin analysis_repo_link`  
+
 * This should return that the remote already exists if I did the above step correctly.  
 `git config --global user.name "Your github user name"`  
 `git config --global user.email "Your github email"`  
-`git config --global user.password "Your github password"`  
-`git pull origin master`  
+`git config --global user.password "yourtoken"`  
+`git pull origin main`  
 * This should return a message that things are already up to date
+
 9. Next, I went to work  just like I would normally do! When I was done for the day, I stage, committed and pushed my changes from docker container to GitHub online.
 
 10. Finally, with the work done, I stopped and removed the container by typing in the terminal  
 `ctrl + c`  
 `make down` 
+
+
 
 # Working with Digital Ocean
 I recently (Aug 2021) came across [Danny Foster's blog post](https://www.dfoster.science/post/r-on-digital-ocean/) about using R/Docker and Digital Ocean. It has some additional capacity that I thought would be useful, particularly using Dropbox and mounted Volumes for large file management. In his workflow, Danny actually does the Digital Ocean stuff first and then the Docker stuff. I'm not sure if one way is better than the other. In any event, here is what I did to get started with Digital Ocean, which largely follows Danny's recommendations. 
