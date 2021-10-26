@@ -7,11 +7,7 @@ services:
     ports: 
       - "8787:8787"
     volumes:
-      - ~/GitHub/sdm_workflow/scratch/aja/TargetsSDM:/home/aallyn/TargetsSDM
-      # - /mnt/volume_nyc1_03/:/home/aallyn/block_storage/
-      # Here is how you would add data from a local folder
-      #- ./DataTest:/home/rstudio/DataTest
-      # Adding GIT information -- this might be causing an error?
-      #- ~/.gitconfig:/etc/gitconfig
+      # This will work if docker container is started on local host, doesn't work with a droplet
+      # - ~/GitHub/sdm_workflow/scratch/aja/TargetsSDM:/home/aallyn/TargetsSDM
     env_file:
       - ./secret.env
