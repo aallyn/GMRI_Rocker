@@ -7,7 +7,7 @@ services:
     ports: 
       - "8787:8787"
     volumes:
-      - $HOME/GitHub/sdm_workflow/scratch/aja/TargetsSDM:/home/aallyn/TargetsSDM
+      - ~/GitHub/sdm_workflow/scratch/aja/TargetsSDM:/home/aallyn/TargetsSDM
       # - /mnt/volume_nyc1_03/:/home/aallyn/block_storage/
       # Here is how you would add data from a local folder
       #- ./DataTest:/home/rstudio/DataTest
