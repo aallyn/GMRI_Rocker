@@ -4,12 +4,16 @@
 
 # New as of 02/16/2022
 install.packages("devtools")
-install_github("james-thorson/VAST", INSTALL_opts = "--no-staged-install")
+install.packages("Matrix")
+install.packages("INLA", repos = c(getOption("repos"), INLA = "https://inla.r-inla-download.org/R/testing"), dep = TRUE, INSTALL_opts = c("--no-lock"))
+devtools::install_github("james-thorson/VAST@3.7.1", INSTALL_opts = "--no-staged-install")
 install.packages("splines")
 install.packages("tidyverse")
 install.packages("lubridate")
 install.packages("sf")
 install.packages("here")
+install.packages("future")
+install.packages("furrr")
 install.packages("targets")
 install.packages("tarchetypes")
 install.packages("raster")

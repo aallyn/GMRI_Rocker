@@ -6,7 +6,7 @@ services:
     build: .
     ports:
       - "8787:8787"
-    volumes:
-      - ~/GitHub/TargetsSDM:/home/andrew.allyn@gmail.com/TargetsSDM
+      #volumes:
+      #- ~/GitHub/TargetsSDM:/home/aallyn/TargetsSDM
     env_file:
       - ./secret.env
