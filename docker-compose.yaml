@@ -1,13 +1,12 @@
-version: "3.3"
+version: "3.5"
 
 services:
-  rstudio: 
+  rstudio:
     image: ajall1985/gmri_rocker
     build: .
-    ports: 
+    ports:
       - "8787:8787"
-    #volumes:
-      # This will work if docker container is started on local host, doesn't work with a droplet
-      # - ~/GitHub/sdm_workflow/scratch/aja/TargetsSDM:/home/aallyn/TargetsSDM
+    volumes:
+      - ~/GitHub/TargetsSDM:/home/andrew.allyn@gmail.com/TargetsSDM
     env_file:
       - ./secret.env

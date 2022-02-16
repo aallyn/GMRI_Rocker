@@ -2,7 +2,7 @@
 FROM rclone/rclone as rclone-source
 
 # Load base image, in this case the geospatial image from Rocker
-FROM rocker/geospatial:4.0.4
+FROM rocker/geospatial:4.1.2
 
 COPY --from=rclone-source /usr/local/bin/rclone /usr/local/bin/rclone
 

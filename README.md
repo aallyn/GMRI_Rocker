@@ -14,7 +14,7 @@ Along with the docker information, the other piece of this repo relates to using
 
 a. A `Dockerfile`. The `Dockerfile` is a recipe for recreating a compute environment. I'm sure I am missing some of what it can do, but I basically think about it like a list of instructions to create an identical RStudio session to the one that starts on my local machine if I open RStudio, along with all the necessary packages used in my analysis. For this, I started by checking out the [rocker project](https://hub.docker.com/u/rocker). There's a variety of different images available depending on your particular analysis. For example, if you are doing a lot of machine learning work, you might be more interested in the rocker/ml-verse image. For this docker container, I built from the rocker/geospatial image. With this as the base, I then added a few things. First, I copied the settings for my rstudio sessions on my local machine and added them to the container. This means that when I do open RStudio in the container, it will have the same appearance and behavior as RStudio on my local machine. Next, there were additional packages that I wanted to have installed in the docker container not included in the base image. I am sure there are other ways to do this. I decided the easiest thing was to write an .R script that had the `install` and `library` calls for what I needed. Within the dockerfile, I then instruct the container to copy the .R file inside the container and run the code.  
 
-**Note as of Fall 2021** I was really running into some issues with moving data into and out of the container when it was eventually run on a DigitalOcean drople. I tried a bunch of different stuff (e.g., mounting a volume storage to Dropbox) and nothing seemed to work. As a last attempt, I tried out the `Rclone` copy and sync functionality. This meant adding this into the docker image and the `Dockerfile` now reflects this with essentially two `FROM` statements.
+**Note as of Fall 2021** I was really running into some issues with moving data into and out of the container when it was eventually run on a DigitalOcean droplet. I tried a bunch of different stuff (e.g., mounting a volume storage to Dropbox) and nothing seemed to work. As a last attempt, I tried out the `Rclone` copy and sync functionality. This meant adding this into the docker image and the `Dockerfile` now reflects this with essentially two `FROM` statements.
 
 b. I created a `docker-compose.yaml` file and a `docker-compose.override.yaml` file. The `docker-compose.yaml` file defines the services that are available within the container. In this case, rstudio. In addition, it provides a nice way to transfer data from our computer (or network) to the docker container using "volumes", which would be available for all users. For this docker image, I give an example of mounting a local data volume in the `docker-compose.yaml` file (which is commented out currently). Additionally, I give an example for mounting data from a cloud based storage program with the `docker-compose.override.yaml` file. The path to the cloud storage is likely going to be unique for each user and to work, each user would essentially need to edit this file. It also provides the opportunity to mount a volume for a specific project. Finally, in `docker-compose.yaml` I use a `secret.env` file to load in my RStudio login and password credentials.  
 
@@ -38,14 +38,6 @@ With that, I opened a web browser and typed "http://localhost:8787", which opene
 
 6. After connecting to the local RStudio instance running inside the docker container, I start to work to more easily move files between local computer/docker container/droplet and google drive. To do this, I followed the instructions here post build: https://rclone.org/drive/, with one exception. When prompted to say yes or no, I selected no as I was in a remote/headless situation running RStudio on the local host. 
 
-To confirm this all worked, I then typed `rclone lsd your_remote_name:` and was relieved to see all of the google drive folders listed. To get these files into the docker container, I ran the following two commands:
-
-`mkdir /home/aallyn/destination_folder_name`
-`rclone sync "your_remote_name:your_remote_folder_path" "/home/aallyn/destination_folder_name"`
-
-This took a little time, but eventually I could see I had all of the folders/files I needed! I also wrote out a simple .csv file from R and then did the following to see if the file was copied to google drive, and it was!
-`rclone copy --update "/home/aallyn/destination_folder_name/testing.csv" "your_remote_name:your_remote_folder_path/testing.csv"`
-
 8.  After getting the computing environmnet set up, the next thing I needed was to get my code and data into the container. For the code bits and small files, I used GitHub. For larger files, I use the volume approach discused earlier. To get the code bits and small files, I went to my GitHub account online and copied the address of the repo that has the code/data/etc (analysis_repo_link) I wanted to bring in the container. Back in the RStudio instance on the web browser, I started a new project, selected version controlled, Git, and then pasted the address for the repo I had just copied. I then opened up a terminal window and typed the following to make the full connection to the GitHub repo and pull in its contents
 `git init`  
 `git remote add origin analysis_repo_link`  
@@ -56,6 +48,14 @@ This took a little time, but eventually I could see I had all of the folders/fil
 `git config --global user.password "yourtoken"`  
 `git pull origin main`  
 * This should return a message that things are already up to date
+
+To confirm this all worked, I then typed `rclone lsd your_remote_name:` and was relieved to see all of the google drive folders listed. To get these files into the docker container, I ran the following two commands:
+
+`mkdir /home/aallyn/destination_folder_name`
+`rclone sync "your_remote_name:your_remote_folder_path" "/home/aallyn/destination_folder_name"`
+
+This took a little time, but eventually I could see I had all of the folders/files I needed! I also wrote out a simple .csv file from R and then did the following to see if the file was copied to google drive, and it was!
+`rclone copy --update "/home/aallyn/destination_folder_name/testing.csv" "your_remote_name:your_remote_folder_path/testing.csv"`
 
 9. Next, I went to work  just like I would normally do! When I was done for the day, I stage, committed and pushed my changes from docker container to GitHub online.
 
@@ -76,35 +76,33 @@ I recently (Aug 2021) came across [Danny Foster's blog post](https://www.dfoster
 
 4. Once this was done, I connected to the droplet through the terminal and using the `ssh` command. Here is another spot where things were a bit different for me. Instead of ssh'ing to a specific domain, I just typed `ssh root@floatingIPaddress`. This seemed to work and got me connected to the droplet. I then picked back up with Danny's instructions at the "Make sure block storage volume is mounted and attached." section.
 
-5. After connecting to the droplet, I double checked that the mounted volume is there. To do this, I typed `cd /mnt` into the terminal and then `ls`. If everything has gone according to plan, you should see the name of the mounted volume that Digital Ocean automatically configured. For me, this was "volume_nyc1_01". After confirming that looked good, I created a mount point for the volume and then did some things (changing fstab), which Danny recommended and I have no idea what they actually do.
-
 6. Next, I set up a non-root user. I think the general idea here is that instead of having things start at `root`, you can actually create named users, which will likely be helpful down the line with executing code, writing code, etc. I followed Danny's instructions exactly and ran the following lines, while substituting "aallyn" for "your user".
 
-`root@your_domain:~# adduser --system --group your_user`  
+`root@your_domain:~# adduser --system --group aallyn`  
 
-`root@your_domain:~# usermod -u 1000 your_user` 
+`root@your_domain:~# usermod -u 1000 aallyn` 
 
-`root@your_domain:~# mkdir /home/your_user/.ssh`  
+`root@your_domain:~# mkdir /home/aallyn/.ssh`  
 
-`root@your_domain:~# chmod 0700 /home/your_user/.ssh/`  
+`root@your_domain:~# chmod 0700 /home/aallyn/.ssh/`  
 
-`root@your_domain:~# cp -Rfv /root/.ssh /home/your_user/`  
+`root@your_domain:~# cp -Rfv /root/.ssh /home/aallyn/`  
 
-`root@your_domain:~# chown -Rfv your_user.your_user /home/your_user/.ssh`  
+`root@your_domain:~# chown -Rfv aallyn.aallyn /home/aallyn/.ssh`  
 
-`root@your_domain:~# chown -R your_user:your_user /home/your_user/`  
+`root@your_domain:~# chown -R aallyn:aallyn /home/aallyn/`  
 
-`root@your_domain:~# chown -R your_user:your_user /mnt/volume_nyc1_01/`  
+`root@your_domain:~# chown -R aallyn:aallyn /mnt/volume_nyc1_01/`  
 
-`root@your_domain:~# gpasswd -a your_user sudo`  
+`root@your_domain:~# gpasswd -a aallyn sudo`  
 
-`root@your_domain:~# echo "your_user ALL=(ALL) NOPASSWD: ALL" | (EDITOR="tee -a" visudo)`  
+`root@your_domain:~# echo "aallyn ALL=(ALL) NOPASSWD: ALL" | (EDITOR="tee -a" visudo)`  
 
 `root@your_domain:~# service ssh restart`  
 
-`root@your_domain:~# usermod -s /bin/bash your_user`  
+`root@your_domain:~# usermod -s /bin/bash aallyn`  
 
-`root@your_domain:~# usermod -a -G docker your_user`  
+`root@your_domain:~# usermod -a -G docker aallyn`  
 
 `logout`  
 
@@ -128,7 +126,10 @@ and then  `usermod -a -G docker your_user`. That seemed to fix things.
 
 10. To access and use the container on the DigitalOcean droplet, I opened a web broswer to web "http://IPaddressoftheDigitalOceanDroplet:8787" as opposed to "http://localhost:8787". 
 
-**Connection errors** When I was making quite a few edits to the Dockerfiles and pulling them back down and running `make up`, I ran into a connection error when I went and tried to connect to the droplet through the web browser. I have no idea what caused this and ended up having to destroy the droplet and start over. 
+**Connection errors** When I was making quite a few edits to the Dockerfiles and pulling them back down and running `make up`, I ran into a connection error when I went and tried to connect to the droplet through the web browser. I have no idea what caused this and ended up having to destroy the droplet and start over.
+
+# Run git and then google stuff
+
 
 11. One thing that was still missing was the mounting of the block storage volume. This is simply because I did the docker work first and I didn't know the block storage volume name. With the name after setting up the Digitial Ocean bits, I then edited the `docker-compose.yaml` file "volumes" section as 
       `- $HOME/:/home/aallyn/`
