@@ -2,7 +2,7 @@
 FROM rclone/rclone as rclone-source
 
 # Load base image, in this case the geospatial image from Rocker
-FROM rocker/geospatial:4.0.4
+FROM rocker/geospatial:4.1.0
 
 COPY --from=rclone-source /usr/local/bin/rclone /usr/local/bin/rclone
 
@@ -34,12 +34,16 @@ RUN pip install DVC \
 
 # Github...
 ARG GIT_TOKEN
-
 RUN git init \
     && git clone https://GIT_TOKEN@github.com/aallyn/TargetsSDM.git /home/aallyn/TargetsSDM
+
+# TMB
+RUN git clone https://github.com/kaskr/adcomp /home/adcomp 
+WORKDIR /home/aallyn/adcomp
+RUN make install-metis-full
+WORKDIR /home/aallyn
 
 # Change directory and DVC pull -- doesn't work. Do this manually inside the container on the Droplet.
 # WORKDIR /home/aallyn/TargetsSDM
 # RUN dvc pull
 
-RUN apt-get install mlocate

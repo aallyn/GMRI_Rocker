@@ -5,7 +5,10 @@
 # New as of 02/16/2022
 options(timeout = 10000)
 install.packages("devtools")
-install.packages("Matrix")
+install_version("Matrix", version = "1.2.8")
+# install.packages("Matrix")
+
+# In an effort to try to install TMB and get to the "optimal" speed pieces..
 install.packages("INLA", repos = c(getOption("repos"), INLA = "https://inla.r-inla-download.org/R/stable"), dep = TRUE, INSTALL_opts = c("--no-lock"))
 library(INLA)
 devtools::install_github("james-thorson/VAST@3.7.1", INSTALL_opts = "--no-staged-install")
