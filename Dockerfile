@@ -41,3 +41,5 @@ RUN git init \
 # Change directory and DVC pull -- doesn't work. Do this manually inside the container on the Droplet.
 # WORKDIR /home/aallyn/TargetsSDM
 # RUN dvc pull
+
+RUN apt-get install mlocate
