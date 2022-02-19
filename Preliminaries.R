@@ -5,7 +5,7 @@
 # New as of 02/16/2022
 options(timeout = 10000)
 install.packages("devtools")
-devtools::install_version("Matrix", version = "1.3"))
+devtools::install_version("Matrix", version = "1.3")
 install.packages("TMB")
 install.packages("INLA", repos = c(getOption("repos"), INLA = "https://inla.r-inla-download.org/R/stable"), dep = TRUE, INSTALL_opts = c("--no-lock"))
 library(INLA)
