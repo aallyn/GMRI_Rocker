@@ -5,15 +5,14 @@
 # New as of 02/16/2022
 options(timeout = 10000)
 install.packages("devtools")
-install_version("Matrix", version = "1.2.8")
-# install.packages("Matrix")
-
-# In an effort to try to install TMB and get to the "optimal" speed pieces..
+devtools::install_version("Matrix", version = "1.3"))
+install.packages("TMB")
 install.packages("INLA", repos = c(getOption("repos"), INLA = "https://inla.r-inla-download.org/R/stable"), dep = TRUE, INSTALL_opts = c("--no-lock"))
 library(INLA)
+devtools::install_github("james-thorson/FishStatsUtils", INSTALL_opts = "--no-staged-install")
 devtools::install_github("james-thorson/VAST@3.7.1", INSTALL_opts = "--no-staged-install")
 install.packages("splines")
-install.packages("tidyverse")
+# install.packages("tidyverse")
 install.packages("lubridate")
 install.packages("sf")
 install.packages("here")
