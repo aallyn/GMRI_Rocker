@@ -4,23 +4,50 @@ FROM rclone/rclone as rclone-source
 # Load base image, in this case the geospatial image from Rocker
 FROM rocker/tidyverse:4.1.2
 
+# R add ons that can be installed easily
+RUN apt-get update \
+    && apt-get install -y --no-install-recommends \
+    libudunits2-dev \
+    libgdal-dev \
+    libgeos-dev 
+
+RUN install2.r --error \
+    devtools \
+    rgdal \
+    sf \
+    sp \
+    rgeos \
+    raster \
+    TMB \
+    splines \
+    here \
+    future \
+    furrr \
+    targets \
+    tarchetypes \
+    lubridate \
+    gifski \
+    tictoc
+
 COPY --from=rclone-source /usr/local/bin/rclone /usr/local/bin/rclone
 
 # Still some things we need to add. First, make directory where we are going to have RStudio settings (and data volumes)                                             
-COPY ./rstudio-prefs.json /etc/rstudio/rstudio-prefs.json
+# COPY ./rstudio-prefs.json /etc/rstudio/rstudio-prefs.json
 
 # Github PAT
-COPY ./GithubPAT.txt ./GithubPAT.txt
-COPY ./GithubPAT.txt .Renviron
-COPY ./secret.env ./secret.env
+# COPY ./GithubPAT.txt ./GithubPAT.txt
+# COPY ./GithubPAT.txt .Renviron
+# COPY ./secret.env ./secret.env
 
-# Copy Makevars
+# Copy some R stuffs...
+ARG GITHUB_PAT
 RUN mkdir .R \
-    && echo 'CXX = g++ -fno-gnu-unique' > .R/Makevars
+    && echo 'CXX = g++ -fno-gnu-unique' > .R/Makevars \
+    && echo GITHUB_PAT > .Renviron
 
-# Udunits 
-RUN apt-get update \
-    && apt-get install -y libudunits2-dev
+# # Udunits 
+# RUN apt-get update \
+#     && apt-get install -y libudunits2-dev
 
 # Install DVC
 RUN apt-get update \
