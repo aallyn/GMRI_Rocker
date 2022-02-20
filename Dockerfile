@@ -35,15 +35,11 @@ COPY --from=rclone-source /usr/local/bin/rclone /usr/local/bin/rclone
 # COPY ./rstudio-prefs.json /etc/rstudio/rstudio-prefs.json
 
 # Github PAT
-# COPY ./GithubPAT.txt ./GithubPAT.txt
-# COPY ./GithubPAT.txt .Renviron
-# COPY ./secret.env ./secret.env
-
-# Copy some R stuffs...
-ARG GITHUB_PAT
+ARG GIT_TOKEN
+RUN git config --global credential.helper \
+    '!f() { echo username=$GITHUB_username; echo "password=$GIT_TOKEN"; };f'
 RUN mkdir .R \
-    && echo 'CXX = g++ -fno-gnu-unique' > .R/Makevars \
-    && echo GITHUB_PAT > .Renviron
+    && echo 'CXX = g++ -fno-gnu-unique' > .R/Makevars 
 
 # # Udunits 
 # RUN apt-get update \
@@ -57,8 +53,7 @@ RUN apt-get update \
 RUN pip install DVC \
     && pip install dvc[gdrive]
 
-# Github...
-ARG GIT_TOKEN
+# Github for this specific project
 RUN git init \
     && git clone https://GIT_TOKEN@github.com/aallyn/TargetsSDM.git /home/aallyn/TargetsSDM
 
