@@ -1,7 +1,11 @@
 {
     "default_project_location": "~/GitHub",
-    "show_terminal_tab": false,
     "font_size_points": 12,
     "pdf_previewer": "none",
-    "posix_terminal_shell": "bash"
+    "posix_terminal_shell": "bash",
+    "jobs_tab_visibility": "shown",
+    "soft_wrap_r_files": true,
+    "document_author": "Andrew Allyn",
+    "initial_working_directory": "~",
+    "editor_theme": "Tomorrow Night"
 }
