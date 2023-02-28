@@ -22,16 +22,16 @@ d. Finally, I created a `.gitignore` file. This can include a number of differen
 `git push origin master`  
 I think there is a way that you could then link this up to DockerHub so that in the future any changes to the repo would prompt an automatic build. This was causing me issues. So, I aborted that approach. But, it is definitely a potential option. 
 
-If you still want to make sure things are on Dockerhub, you can go through a process where you create a new repo on Dockerhub. You can then type the following lines in the terminal to build, tag, and push this docker container to your Dockerhub account. This becomes helpful later on if you move to working on Digital Ocean. For me, I typed 
+If you still want to make sure things are on Dockerhub, you can go through a process where you create a new repo on Dockerhub. You can then type the following lines in the terminal to build, tag, and push this docker container to your Dockerhub account. For me, I typed 
 `docker build .` followed by `docker tag HASHOFBUILD dockerhubrepoaccountname/dockerhubtargetrepo:tag name` and finally `docker push dockerhubrepoaccountname/dockerhubtargetrepo:tag name`.
 
 5. Now that everything was stored on GitHub and ready to go, I was ready to compose, build and run the container. Given the earlier work with the `Makefile`, this process was really easy. In the terminal, I made sure I was in the correct directory and then typed  
 `make up`  
-The first time calling `make up`, it took a little while as the docker container was built, according to the recipe in the `Dockerfile` and any adjustments from the `docker-compose.yml` or `docker-compose.override.yml` files. When it is done, you will likely see something like  
+The first time calling `make up`, it took a little while as the Docker container was built, according to the recipe in the `Dockerfile` and any adjustments from the `docker-compose.yml` or `docker-compose.override.yml` files. When it is done, you will likely see something like  
 `rstudio-1 | [services.d] done.` in the terminal window.  
 With that, I opened a web browser and typed "http://localhost:8787", which opened an RStudio instance in the web browser, a carbon copy of the one I have if I opened the RStudio app on my local machine!
 
-6. Next, I went to work just like I would normally. When I was done for the day, I stage, committed and pushed my changes from docker container to GitHub online.
+6. Next, I went to work just like I would normally. When I was done for the day, I stage, committed and pushed my changes from Docker container to GitHub online.
 
 10. Finally, with the work done, I stopped and removed the container by typing in the terminal  
 `ctrl + c`  

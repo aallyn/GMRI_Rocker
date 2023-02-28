@@ -13,7 +13,6 @@ RUN apt-get update \
 # Install packages from CRAN
 RUN install2.r --error \
     remotes \
-    TMB \
     googleAuthR 
  
 # RStudio settings                                 
