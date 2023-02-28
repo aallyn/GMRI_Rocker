@@ -1,9 +1,9 @@
 version: "3.5"
-
 services:
   rstudio:
-    image: ajall1985/gmri_rocker
-    # build: .
+    image: "ajall1985/gmri_rocker"
+    build:
+      context: .
     # environment:
     #   - GITHUB_PAT=${GIT_TOKEN}
     #   - GOOGLE_APPLICATION_CREDENTIALS=${GOOGLE_APPLICATION_CREDENTIALS}
