@@ -5,12 +5,12 @@ services:
     image: ajall1985/gmri_rocker
     build:
       context: .
-    environment:
-      - GITHUB_PAT=${GIT_TOKEN}
-      - GOOGLE_APPLICATION_CREDENTIALS=${GOOGLE_APPLICATION_CREDENTIALS}
+    # environment:
+    #   - GITHUB_PAT=${GIT_TOKEN}
+    #   - GOOGLE_APPLICATION_CREDENTIALS=${GOOGLE_APPLICATION_CREDENTIALS}
     ports:
       - "8787:8787"
       #volumes:
       #- ~/GitHub/TargetsSDM:/home/aallyn/TargetsSDM
-    env_file:
-      - ./secret.env
+    # env_file:
+    #   - ./secret.env
