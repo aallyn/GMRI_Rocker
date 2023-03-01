@@ -1,9 +1,0 @@
-version: "3.5"
-
-services:
-  rstudio:
-    # Here is how you could add data when paths might vary by user...
-    # volumes:
-    #   - ~/GitHub/TargetsSDM:/home/aallyn/TargetsSDM
-
-
